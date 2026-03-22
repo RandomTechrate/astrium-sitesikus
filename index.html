@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRA — Chapter 3 Season 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0e0e0e;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 64px;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 48px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 26px;
+            letter-spacing: 5px;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 7px 16px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+        .nav-links a.active { color: #fff; background: rgba(255,255,255,0.1); }
+
+        /* HERO */
+        .hero {
+            margin-top: 64px;
+            position: relative;
+            height: calc(100vh - 64px);
+            min-height: 560px;
+            background-image: url('https://th.bing.com/th/id/R.8a42cf357c39b0023fcb43affdc7aae9?rik=peYHZqVudLL9wQ&pid=ImgRaw&r=0');
+            background-size: cover;
+            background-position: center 30%;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 48px 72px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.9) 0%,
+                rgba(0,0,0,0.4) 45%,
+                rgba(0,0,0,0.2) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 640px;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #FFD700;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(64px, 9vw, 110px);
+            line-height: 1;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .hero-desc {
+            font-size: 15px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 420px;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #FFD700;
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 8px;
+            letter-spacing: 0.4px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 24px rgba(255,215,0,0.3);
+        }
+
+        .btn-download:hover {
+            background: #ffe033;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255,215,0,0.4);
+        }
+
+        .btn-download svg { width: 16px; height: 16px; }
+
+        /* NEWS */
+        .news-section {
+            padding: 80px 48px;
+            background: #0e0e0e;
+        }
+
+        .news-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
+
+        .news-top h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 40px;
+            letter-spacing: 3px;
+            color: #fff;
+        }
+
+        .news-top span {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        .news-card {
+            background: #161616;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,215,0,0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-tag {
+            display: inline-block;
+            margin: 20px 20px 0;
+            background: rgba(255,215,0,0.12);
+            color: #FFD700;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        .card-body {
+            padding: 12px 20px 22px;
+        }
+
+        .card-body h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+
+        .card-body p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-date {
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #090909;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 36px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 5px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .footer-left p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 6px;
+        }
+
+        .footer-right a {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .footer-right a:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.07);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 860px) {
+            .navbar { padding: 0 20px; }
+            .hero { padding: 0 24px 56px; }
+            .news-section { padding: 56px 20px; }
+            .news-grid { grid-template-columns: 1fr; max-width: 420px; }
+            footer { flex-direction: column; gap: 20px; padding: 28px 20px; text-align: center; }
+            .footer-right { flex-wrap: wrap; justify-content: center; }
+        }
+
+        @media (max-width: 520px) {
+            .nav-links a { padding: 6px 10px; font-size: 12px; }
+            .hero-title { font-size: 58px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">ASTRA</div>
+    <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#news-section">News</a></li>
+        <li><a href="https://discord.com/invite/astramp" target="_blank">Donations</a></li>
+        <li><a href="#">Tournaments</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-label">Project Astra</p>
+        <h1 class="hero-title">Chapter 3<br>Season 1</h1>
+        <p class="hero-desc">The new era is here. Download now and jump into everything that Chapter 3 Season 1 has to offer.</p>
+        <a href="https://astradownloads.netlify.app/" class="btn-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download for Windows
+        </a>
+    </div>
+</section>
+
+<section id="news-section" class="news-section">
+    <div class="news-top">
+        <h2>Latest News</h2>
+        <span>3 articles</span>
+    </div>
+    <div class="news-grid">
+
+        <div class="news-card">
+            <div class="card-img" style="background-image: url('https://wallpaperaccess.com/full/7991994.jpg')"></div>
+            <span class="card-tag">Update</span>
+            <div class="card-body">
+                <h3>Update #14 Released</h3>
+                <p>New features, bug fixes, and improvements are here. See what changed in the latest patch.</p>
+                <span class="card-date">March 22, 2026</span>
+            </div>
+        </div>
+
+        <div class="news-card">
+            <div class="card-img" style="background-image: url('https://tse2.mm.bing.net/th/id/OIP.66VwIZ0FK6Bt8O0ojiz07AHaEK?rs=1&pid=ImgDetMain&o=7&rm=3')"></div>
+            <span class="card-tag">Esports</span>
+            <div class="card-body">
+                <h3>Tournament Coming Soon</h3>
+                <p>Join our upcoming competitive event. Real prizes, real competition. Registrations open soon.</p>
+                <span class="card-date">March 20, 2026</span>
+            </div>
+        </div>
+
+        <div class="news-card">
+            <div class="card-img" style="background-image: url('https://cdn.wallpapersafari.com/49/11/zHis3x.jpg')"></div>
+            <span class="card-tag">Content</span>
+            <div class="card-body">
+                <h3>New Content Update Available</h3>
+                <p>Season 19 is live. Explore new areas and limited-time events inside the world of Astra.</p>
+                <span class="card-date">March 18, 2026</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <div class="footer-left">
+        <div class="footer-logo">ASTRA</div>
+        <p>© 2026 Project Astra. All rights reserved.</p>
+    </div>
+    <div class="footer-right">
+        <a href="#">Home</a>
+        <a href="#news-section">News</a>
+        <a href="https://discord.com/invite/astramp" target="_blank">Donations</a>
+        <a href="#">Tournaments</a>
+    </div>
+</footer>
+
+</body>
+</html>
